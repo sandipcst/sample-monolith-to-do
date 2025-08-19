@@ -1,0 +1,85 @@
+
+
+Full Code - 
+# File: templates/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <ul>
+        {% for todo in todos %}
+            <li>{{ todo }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('register') }}">Register</a>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('add_todo') }}">Add Todo</a>
+</body>
+</html>
+
+Full Code - 
+# File: templates/register.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>
+
+Full Code - 
+# File: templates/login.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+
+1. The task of the user_service is to manage user-related operations, such as user registration, user login, and user authentication. It will handle requests related to user management and interact with other services to ensure secure access and data consistency.
+
+2. The user_service will be implemented as a RESTful API using a suitable web framework, such as Flask or FastAPI in Python. It will have separate endpoints for user registration, user login, and potentially user profile management. The service will use a database to store user information securely, replacing the in-memory users dictionary from the monolithic application.
+
+3. The user_service will interact with other services in the following ways:
+   - Authentication: It will validate user credentials against a dedicated authentication service or an external identity provider (e.g., OAuth, JWT).
+   - Authorization: It will collaborate with an authorization service to ensure that users have the necessary permissions to access specific resources or perform certain actions.
+   - Data consistency: It may interact with other services (e.g., todo_service) to maintain data consistency, such as updating user-related data when a todo item is added or modified.
+
+4. To ensure flexibility and avoid hard-coding, the user_service should use environment variables for configuration settings. For example:
+   - DATABASE_URL: To store the connection string for the database.
+   - AUTH_SERVICE_URL: To store the URL of the authentication service.
+   - JWT_SECRET: To store the secret key for generating and verifying JSON Web Tokens (JWT).
+
+5. The user_service will receive POST/PUT/GET requests from other microservices and vice versa using standard HTTP methods:
+   - POST: For user registration and login operations.
+   - GET: For retrieving user information or listing available users.
+   - PUT: For updating user information (e.g., changing passwords).
+
+   Similarly, the user_service will make requests to other services using HTTP methods, such as:
+   - GET: To fetch user data from the authentication service during login.
+   - POST: To create new users in the authentication service during registration.
+   - PUT: To update user information in the authentication service.
+
+By following this approach, the user_service will be a self-contained, independent microservice that can be scaled and maintained separately from the rest of the application.

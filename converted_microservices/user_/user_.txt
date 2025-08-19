@@ -1,0 +1,79 @@
+
+
+Full Code - 
+# File: templates/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <ul>
+        {% for todo in todos %}
+            <li>{{ todo }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('register') }}">Register</a>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('add_todo') }}">Add Todo</a>
+</body>
+</html>
+
+Full Code - 
+# File: templates/register.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>
+
+Full Code - 
+# File: templates/login.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+
+The monolithic application currently provides the following functionalities:
+
+1. User registration: Allows new users to register with a unique username and password.
+2. User login: Allows registered users to log in with their credentials.
+3. Adding to-do items: Allows logged-in users to add new to-do items to a shared list.
+
+Now, let's outline the user_ microservice based on these functionalities:
+
+1. **Task of the user_ service**: The user_ microservice will handle user-related operations, such as user registration, user login, and managing user authentication. It will not handle to-do items, as that functionality will be separated into a separate microservice (e.g., todo_service).
+
+2. **Implementation of the user_ service**: The user_ service will be implemented using a suitable web framework, such as Flask or FastAPI, in Python. It will expose RESTful APIs for user registration, user login, and user authentication. The service will use a database (e.g., PostgreSQL, MySQL) to store user information securely.
+
+3. **Interaction with other services**: The user_ service will interact with the todo_service to ensure that only authenticated users can add to-do items. It will also communicate with a central authentication service (e.g., OAuth2 or JWT) to manage user sessions and tokens.
+
+4. **Environment variables**: To ensure that the user_ service is flexible and adaptable to different environments, it should use environment variables for configuration. For example, the database connection string, JWT secret key, and other sensitive information should be set using environment variables. This way, you can easily switch between development, staging, and production environments without modifying the code.
+
+5. **Receiving and sending requests**: The user_ service will receive POST/PUT/GET requests from other microservices or clients for user-related operations. For instance, when a user attempts to register or log in, the client will send a POST request to the user_ service's /register or /login endpoints. Similarly, when a user logs in, the user_ service will respond with a JWT token, which the client can use for subsequent authenticated requests.
+
+To summarize, the user_ microservice will focus on user management and authentication, interacting with other services as needed. It will use environment variables for configuration and expose RESTful APIs to receive and send requests. This separation of concerns will make the system more modular, scalable, and maintainable.

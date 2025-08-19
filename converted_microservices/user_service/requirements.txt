@@ -1,0 +1,6 @@
+fastapi
+pydantic
+todo_service
+user_
+user_service
+uvicorn
